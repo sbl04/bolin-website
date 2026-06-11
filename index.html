@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>宋博霖 · Bolin Song</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --green:       #4A6741;
+    --green-light: #6B8F67;
+    --green-pale:  #EEF3ED;
+    --green-mid:   #D4E0D2;
+    --charcoal:    #1C1C1A;
+    --ink:         #2E2E2C;
+    --muted:       #6B6B68;
+    --muted-light: #9A9A96;
+    --bg:          #F7F5F0;
+    --surface:     #FFFFFF;
+    --border:      rgba(0,0,0,0.07);
+    --radius:      14px;
+  }
+
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Inter', 'Noto Sans SC', sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    font-size: 15px;
+    line-height: 1.65;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: rgba(247,245,240,0.90);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    height: 56px;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 2.5rem;
+  }
+  .nav-logo { font-weight: 700; font-size: 16px; color: var(--green); letter-spacing: 0.01em; }
+  .nav-links { display: flex; gap: 2rem; }
+  .nav-links a {
+    font-size: 13px; font-weight: 500; color: var(--muted);
+    text-decoration: none; transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--green); }
+
+  /* ── HERO ── */
+  .hero {
+    padding-top: 130px; padding-bottom: 90px;
+    background: var(--green-pale);
+    border-bottom: 1px solid var(--green-mid);
+  }
+  .hero-inner {
+    max-width: 860px; margin: 0 auto; padding: 0 2.5rem;
+    display: flex; align-items: center; gap: 36px;
+  }
+  .hero-photo {
+    width: 140px; height: 140px; border-radius: 50%;
+    object-fit: cover; object-position: center 15%;
+    flex-shrink: 0;
+    border: 3px solid var(--green-mid);
+    box-shadow: 0 4px 20px rgba(74,103,65,0.15);
+  }
+  .hero-text h1 {
+    font-size: 36px; font-weight: 700; color: var(--charcoal);
+    line-height: 1.15; margin-bottom: 8px;
+  }
+  .hero-sub { font-size: 16px; color: var(--muted); margin-bottom: 20px; }
+  .hero-tags { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 28px; }
+  .tag {
+    font-size: 12px; font-weight: 500; padding: 4px 12px;
+    border-radius: 999px; border: 1.5px solid var(--green-light);
+    color: var(--green); background: rgba(74,103,65,0.06);
+  }
+  .hero-cta { display: flex; gap: 10px; }
+  .btn {
+    padding: 9px 22px; border-radius: 999px; font-size: 13px;
+    font-weight: 600; cursor: pointer; text-decoration: none;
+    transition: all 0.2s; display: inline-block;
+  }
+  .btn-primary { background: var(--green); color: #fff; }
+  .btn-primary:hover { background: var(--green-light); }
+  .btn-outline {
+    border: 1.5px solid var(--green); color: var(--green); background: transparent;
+  }
+  .btn-outline:hover { background: var(--green-pale); }
+
+  /* ── LAYOUT ── */
+  section { padding: 72px 0; }
+  .container { max-width: 860px; margin: 0 auto; padding: 0 2.5rem; }
+  [id] { scroll-margin-top: 68px; }
+
+  .section-label {
+    font-size: 11px; font-weight: 600; letter-spacing: 0.12em;
+    text-transform: uppercase; color: var(--green); margin-bottom: 6px;
+  }
+  .section-title { font-size: 26px; font-weight: 700; margin-bottom: 36px; color: var(--charcoal); }
+
+  /* ── ABOUT ── */
+  .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+  .about-card {
+    background: var(--surface); border-radius: var(--radius);
+    padding: 22px; border: 1px solid var(--border);
+    transition: box-shadow 0.2s;
+  }
+  .about-card:hover { box-shadow: 0 6px 24px rgba(0,0,0,0.07); }
+  .about-icon {
+    width: 40px; height: 40px; border-radius: 10px;
+    background: var(--green-pale); display: flex; align-items: center;
+    justify-content: center; font-size: 18px; margin-bottom: 12px;
+  }
+  .about-card h3 { font-size: 14px; font-weight: 600; margin-bottom: 7px; color: var(--charcoal); }
+  .about-card p { font-size: 13px; color: var(--muted); line-height: 1.7; }
+
+  /* ── SKILLS ── */
+  #skills { background: var(--green-pale); }
+  .skills-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 18px; }
+  .skill-card {
+    background: var(--surface); border-radius: var(--radius);
+    padding: 20px; border: 1px solid var(--border);
+  }
+  .skill-card-title {
+    font-size: 11px; font-weight: 600; letter-spacing: 0.08em;
+    text-transform: uppercase; color: var(--muted); margin-bottom: 16px;
+  }
+  .skill-item { display: flex; align-items: center; margin-bottom: 11px; }
+  .skill-name { font-size: 13px; font-weight: 500; min-width: 52px; }
+  .skill-bar-bg {
+    flex: 1; height: 4px; background: var(--green-pale);
+    border-radius: 999px; margin: 0 10px;
+  }
+  .skill-bar { height: 4px; border-radius: 999px; background: var(--green); }
+  .skill-label { font-size: 11px; color: var(--muted); min-width: 52px; text-align: right; }
+  .badge-row { display: flex; flex-wrap: wrap; gap: 7px; }
+  .badge {
+    font-size: 12px; padding: 3px 9px; border-radius: 6px; font-weight: 500;
+    background: var(--green-pale); color: var(--green);
+    border: 1px solid var(--green-mid);
+  }
+
+  /* ── TIMELINE ── */
+  .timeline { position: relative; padding-left: 26px; }
+  .timeline::before {
+    content: ''; position: absolute; left: 7px; top: 4px; bottom: 4px;
+    width: 2px; background: var(--green-mid); border-radius: 999px;
+  }
+  .tl-item { position: relative; margin-bottom: 34px; }
+  .tl-dot {
+    position: absolute; left: -22px; top: 5px;
+    width: 12px; height: 12px; border-radius: 50%;
+    background: var(--green); border: 2px solid var(--bg);
+  }
+  .tl-meta { font-size: 11px; color: var(--muted); font-weight: 500; margin-bottom: 3px; }
+  .tl-title { font-size: 15px; font-weight: 600; color: var(--charcoal); margin-bottom: 3px; }
+  .tl-org { font-size: 13px; color: var(--green); font-weight: 500; margin-bottom: 9px; }
+  .tl-desc { font-size: 13px; color: var(--muted); line-height: 1.7; }
+  .tl-desc ul { padding-left: 16px; }
+  .tl-desc li { margin-bottom: 3px; }
+
+  /* ── PROJECTS ── */
+  #projects { background: #F2F0EB; }
+  .projects-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+  .project-card {
+    background: var(--surface); border-radius: var(--radius);
+    border: 1px solid var(--border);
+    overflow: hidden;
+    transition: transform 0.2s, box-shadow 0.2s; cursor: pointer;
+  }
+  .project-card:hover { transform: translateY(-3px); box-shadow: 0 10px 32px rgba(0,0,0,0.09); }
+  .card-accent { height: 3px; background: var(--green); }
+  .card-body { padding: 20px 22px 16px; }
+  .proj-tag-row { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 12px; }
+  .proj-tag {
+    font-size: 10px; font-weight: 600; padding: 3px 8px; border-radius: 4px;
+    text-transform: uppercase; letter-spacing: 0.05em;
+    background: var(--green-pale); color: var(--green);
+    border: 1px solid var(--green-mid);
+  }
+  .reads-badge {
+    margin-left: auto; font-size: 11px; font-weight: 700;
+    padding: 2px 8px; border-radius: 999px;
+    background: rgba(74,103,65,0.1); color: var(--green);
+  }
+  .project-card h3 { font-size: 15px; font-weight: 600; margin-bottom: 8px; color: var(--charcoal); }
+  .project-card p { font-size: 13px; color: var(--muted); line-height: 1.68; }
+  .card-footer {
+    padding: 11px 22px; border-top: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .card-date { font-size: 11px; color: var(--muted); }
+  .card-link { font-size: 11px; font-weight: 600; color: var(--green); text-decoration: none; }
+  .card-link:hover { text-decoration: underline; }
+
+  /* Featured wide card */
+  .project-card.wide { grid-column: span 2; display: flex; flex-direction: row; }
+  .wide .card-accent { width: 3px; height: auto; }
+  .wide .card-body { flex: 1; }
+  .wide .card-side {
+    min-width: 120px; display: flex; flex-direction: column;
+    align-items: flex-start; justify-content: center;
+    padding: 20px; border-left: 1px solid var(--border);
+  }
+  .wide .reads-big { font-size: 28px; font-weight: 700; color: var(--green); line-height: 1; }
+  .wide .reads-small { font-size: 11px; color: var(--muted); margin-top: 3px; }
+  .wide .reads-date { font-size: 11px; color: var(--muted); margin-top: 10px; }
+
+  /* ── CONTACT ── */
+  #contact { background: var(--green-pale); }
+  .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .contact-card {
+    background: var(--surface); border-radius: var(--radius);
+    padding: 20px; border: 1px solid var(--green-mid);
+    display: flex; align-items: center; gap: 14px;
+  }
+  .contact-icon {
+    width: 44px; height: 44px; border-radius: 10px; flex-shrink: 0;
+    background: var(--green-pale); display: flex;
+    align-items: center; justify-content: center; font-size: 20px;
+  }
+  .contact-card h4 { font-size: 11px; color: var(--muted); margin-bottom: 3px; font-weight: 500; }
+  .contact-card p { font-size: 14px; font-weight: 600; color: var(--charcoal); }
+
+  /* ── FOOTER ── */
+  footer {
+    text-align: center; padding: 36px 2rem;
+    font-size: 12px; color: var(--muted);
+    border-top: 1px solid var(--border);
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">宋博霖 · Bolin</div>
+  <div class="nav-links">
+    <a href="#about">About</a>
+    <a href="#skills">Skills</a>
+    <a href="#experience">Experience</a>
+    <a href="#projects">Writing</a>
+    <a href="#contact">Contact</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="top">
+  <div class="hero-inner">
+
+    <img class="hero-photo" src="my photo.jpg" alt="Bolin Song">
+
+    <div class="hero-text">
+      <h1>宋博霖 · Bolin Song</h1>
+
+      <p class="hero-sub">
+        Sports Business Student at Hosei University, Tokyo &nbsp;·&nbsp; Content Creator
+      </p>
+
+      <div class="hero-tags">
+        <span class="tag">🇯🇵 Tokyo</span>
+        <span class="tag">Sports Business</span>
+        <span class="tag">中文 · EN · JP</span>
+      </div>
+
+      <div class="hero-cta">
+        <a href="#contact" class="btn btn-primary">Get in Touch</a>
+        <a href="#projects" class="btn btn-outline">Read My Writing</a>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="container">
+    <div class="section-label">About Me</div>
+    <div class="section-title">自我介绍</div>
+    <div class="about-grid">
+      <div class="about-card">
+        <div class="about-icon">🎓</div>
+        <h3>法政大学 · 体育商业</h3>
+        <p>在东京法政大学攻读体育商业专业，GPA 3.01/4.0（前20%），获得JASSO留学生奖学金及校级奖学金。深度研习体育文化、体育媒体及体育法学。</p>
+      </div>
+      <div class="about-card">
+        <div class="about-icon">✍️</div>
+        <h3>内容创作者</h3>
+        <p>独立运营微信公众号「HeadingtoTheFuture」5年，累计发布30余篇，多篇阅读量破万（最高2.3万+）。擅长生活感悟与社会观察类深度内容创作。</p>
+      </div>
+      <div class="about-card">
+        <div class="about-icon">🌏</div>
+        <h3>三语学术背景</h3>
+        <p>普通话母语，托福98分（英语），日语JLPT N2。能够跨语言整合英日中三语文献，具备跨文化研究与交流能力。</p>
+      </div>
+      <div class="about-card">
+        <div class="about-icon">☕</div>
+        <h3>丰富的日本工作经验</h3>
+        <p>在东京咖啡店及神户7-Eleven积累了全日语工作经验，熟悉日本职场规范，锻炼了高强度环境下的抗压能力与团队协作精神。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="container">
+    <div class="section-label">Skills</div>
+    <div class="section-title">技能与能力</div>
+    <div class="skills-grid">
+      <div class="skill-card">
+        <div class="skill-card-title">语言能力</div>
+        <div class="skill-item">
+          <span class="skill-name">普通话</span>
+          <div class="skill-bar-bg"><div class="skill-bar" style="width:100%"></div></div>
+          <span class="skill-label">母语</span>
+        </div>
+        <div class="skill-item">
+          <span class="skill-name">英语</span>
+          <div class="skill-bar-bg"><div class="skill-bar" style="width:88%"></div></div>
+          <span class="skill-label">TOEFL 98</span>
+        </div>
+        <div class="skill-item">
+          <span class="skill-name">日语</span>
+          <div class="skill-bar-bg"><div class="skill-bar" style="width:72%"></div></div>
+          <span class="skill-label">JLPT N2</span>
+        </div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-card-title">专业技能</div>
+        <div class="badge-row">
+          <span class="badge">体育商业分析</span>
+          <span class="badge">体育媒体</span>
+          <span class="badge">内容运营</span>
+          <span class="badge">视频剪辑（剪映）</span>
+          <span class="badge">学术研究</span>
+          <span class="badge">跨文化沟通</span>
+        </div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-card-title">办公工具</div>
+        <div class="badge-row">
+          <span class="badge">Word</span>
+          <span class="badge">Excel</span>
+          <span class="badge">PowerPoint</span>
+          <span class="badge">微信公众号运营</span>
+          <span class="badge">PPT排版设计</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section id="experience">
+  <div class="container">
+    <div class="section-label">Experience</div>
+    <div class="section-title">经历</div>
+    <div class="timeline">
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div class="tl-meta">2026.05 — 至今</div>
+        <div class="tl-title">咖啡店员</div>
+        <div class="tl-org">Granny Smith Apple Pie & Coffee · 东京</div>
+        <div class="tl-desc"><ul>
+          <li>负责顾客接待、餐品制作及日常运营，单日最高营业额110万日元</li>
+          <li>锻炼了抗压能力与团队协作精神</li>
+        </ul></div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div class="tl-meta">2026.05</div>
+        <div class="tl-title">日美联合学术研讨会 · 小组组长</div>
+        <div class="tl-org">法政大学 × 辛辛那提大学</div>
+        <div class="tl-desc"><ul>
+          <li>主题：疫情下东京奥运会的举办意义与挑战（全英文发表）</li>
+          <li>负责引言及效益分析两大模块，统筹PPT制作，与教授进行深度学术问答</li>
+        </ul></div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div class="tl-meta">2025.05</div>
+        <div class="tl-title">跨性别运动员参赛资格研究报告 · 独立研究</div>
+        <div class="tl-org">法政大学</div>
+        <div class="tl-desc"><ul>
+          <li>整合英日中三语文献，完成跨学科学术报告并公开发表</li>
+          <li>在性别公平与竞技公正的张力中提出基于科学证据的政策建议</li>
+        </ul></div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div class="tl-meta">2023.07 — 2025.02</div>
+        <div class="tl-title">便利店员</div>
+        <div class="tl-org">7-Eleven · 神户</div>
+        <div class="tl-desc"><ul>
+          <li>全日语环境下独立完成接客、收银及商品管理</li>
+        </ul></div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div class="tl-meta">2021 — 至今</div>
+        <div class="tl-title">微信公众号「HeadingtoTheFuture」· 创作者 & 运营者</div>
+        <div class="tl-org">个人媒体</div>
+        <div class="tl-desc"><ul>
+          <li>独立运营生活感悟与社会观察类公众号，发布30余篇</li>
+          <li>多篇阅读量破万，最高单篇2.3万阅读</li>
+        </ul></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WRITING / PROJECTS -->
+<section id="projects">
+  <div class="container">
+    <div class="section-label">Writing</div>
+    <div class="section-title">精选文章</div>
+    <div class="projects-grid">
+
+      <!-- Featured -->
+      <div class="project-card wide" onclick="window.open('https://mp.weixin.qq.com/s/wajH0_fnhCrrWJ_LFi_YTg','_blank')">
+        <div class="card-accent" style="width:3px;height:auto;background:var(--green);"></div>
+        <div class="card-body">
+          <div class="proj-tag-row">
+            <span class="proj-tag">留学 · 成长</span>
+            <span class="proj-tag">Personal Essay</span>
+          </div>
+          <h3>两年日本考学，真的很痛苦。</h3>
+          <p>近650天的考学旅程回顾——从对名校的憧憬，到对私塾失望的愤怒，到在无数次失败中重新定义"快乐"的意义。写给每一个在这场没有敌人的战争中坚持下来的留子。</p>
+        </div>
+        <div class="card-side">
+          <div class="reads-big">2.3万</div>
+          <div class="reads-small">阅读量</div>
+          <div class="reads-date">2025</div>
+        </div>
+      </div>
+
+      <div class="project-card" onclick="window.open('https://mp.weixin.qq.com/s/fOJNO8mDOaOP8ls41OsvuA','_blank')">
+        <div class="card-accent"></div>
+        <div class="card-body">
+          <div class="proj-tag-row">
+            <span class="proj-tag">社会观察</span>
+            <span class="reads-badge">1.7万阅读</span>
+          </div>
+          <h3>东京为什么有这么多精神病？</h3>
+          <p>从中央线上的冲突到公交站台的莫名挑衅，解剖东京高压社会结构下的人际冷漠与规则异化——以及为什么儒家文化在某些时刻反而更人性化。</p>
+        </div>
+        <div class="card-footer">
+          <span class="card-date">2026.05</span>
+          <a class="card-link" href="https://mp.weixin.qq.com/s/fOJNO8mDOaOP8ls41OsvuA" target="_blank">阅读全文 →</a>
+        </div>
+      </div>
+
+      <div class="project-card" onclick="window.open('https://mp.weixin.qq.com/s/gFMZP1JzMPjwlXJwojbMsA','_blank')">
+        <div class="card-accent"></div>
+        <div class="card-body">
+          <div class="proj-tag-row">
+            <span class="proj-tag">旅行 · 感悟</span>
+            <span class="reads-badge">6,491 阅读</span>
+          </div>
+          <h3>南京游记</h3>
+          <p>雨天困在板面店外、瞻园的黑天鹅、梧桐树枝杈之间"你让让我我让让你"的生命哲学，以及在先锋书店门口树荫下拆开阅读盲盒的午后。</p>
+        </div>
+        <div class="card-footer">
+          <span class="card-date">2024.04</span>
+          <a class="card-link" href="https://mp.weixin.qq.com/s/gFMZP1JzMPjwlXJwojbMsA" target="_blank">阅读全文 →</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="container">
+    <div class="section-label">Contact</div>
+    <div class="section-title">联系我</div>
+    <div class="contact-grid">
+      <div class="contact-card">
+        <div class="contact-icon">📧</div>
+        <div>
+          <h4>Email</h4>
+          <p>bolins2004@163.com</p>
+        </div>
+      </div>
+      <div class="contact-card">
+        <div class="contact-icon">📱</div>
+        <div>
+          <h4>Phone / WeChat</h4>
+          <p>+86 155 5267 1905</p>
+        </div>
+      </div>
+      <div class="contact-card">
+        <div class="contact-icon">🏫</div>
+        <div>
+          <h4>University</h4>
+          <p>Hosei University · Tokyo</p>
+        </div>
+      </div>
+      <div class="contact-card">
+        <div class="contact-icon">✍️</div>
+        <div>
+          <h4>WeChat Public Account</h4>
+          <p>HeadingtoTheFuture</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>© 2026 宋博霖 · Bolin Song &nbsp;·&nbsp; Sports Business · Hosei University Tokyo</p>
+</footer>
+
+<script>
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      e.preventDefault();
+      const el = document.querySelector(a.getAttribute('href'));
+      if (el) el.scrollIntoView({ behavior: 'smooth' });
+    });
+  });
+</script>
+</body>
+</html>
