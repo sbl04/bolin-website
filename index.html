@@ -41,14 +41,25 @@
     height: 56px;
     display: flex; align-items: center; justify-content: space-between;
     padding: 0 2.5rem;
+    gap: 12px;
   }
-  .nav-logo { font-weight: 700; font-size: 16px; color: var(--green); letter-spacing: 0.01em; }
+  .nav-logo { font-weight: 700; font-size: 16px; color: var(--green); letter-spacing: 0.01em; flex-shrink: 0; }
   .nav-links { display: flex; gap: 2rem; }
   .nav-links a {
     font-size: 13px; font-weight: 500; color: var(--muted);
     text-decoration: none; transition: color 0.2s;
   }
   .nav-links a:hover { color: var(--green); }
+
+  /* Language toggle */
+  .lang-btn {
+    font-size: 12px; font-weight: 600; padding: 4px 12px;
+    border-radius: 999px; border: 1.5px solid var(--green);
+    color: var(--green); background: transparent;
+    cursor: pointer; transition: all 0.2s; flex-shrink: 0;
+    font-family: inherit;
+  }
+  .lang-btn:hover { background: var(--green-pale); }
 
   /* ── HERO ── */
   .hero {
@@ -236,7 +247,6 @@
   /* ── MOBILE ── */
   @media (max-width: 768px) {
 
-    /* Nav: hide links, show hamburger */
     nav { padding: 0 1.2rem; }
     .nav-links { display: none; }
     .nav-links.open {
@@ -265,7 +275,6 @@
     .hamburger.open span:nth-child(2) { opacity: 0; }
     .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
 
-    /* Hero */
     .hero { padding-top: 100px; padding-bottom: 60px; }
     .hero-inner {
       flex-direction: column; text-align: center;
@@ -277,23 +286,15 @@
     .hero-tags { justify-content: center; }
     .hero-cta { justify-content: center; flex-wrap: wrap; }
 
-    /* Sections */
     section { padding: 48px 0; }
     .container { padding: 0 1.2rem; }
     .section-title { font-size: 22px; margin-bottom: 24px; }
 
-    /* About */
     .about-grid { grid-template-columns: 1fr; gap: 14px; }
-
-    /* Skills */
     .skills-grid { grid-template-columns: 1fr; gap: 14px; }
 
-    /* Projects */
     .projects-grid { grid-template-columns: 1fr; gap: 14px; }
-    .project-card.wide {
-      grid-column: span 1;
-      flex-direction: column;
-    }
+    .project-card.wide { grid-column: span 1; flex-direction: column; }
     .wide .card-accent { width: auto; height: 3px; }
     .wide .card-side {
       flex-direction: row; align-items: center; gap: 12px;
@@ -302,12 +303,10 @@
     }
     .wide .reads-big { font-size: 22px; }
 
-    /* Contact */
     .contact-grid { grid-template-columns: 1fr; gap: 12px; }
     .contact-card p { font-size: 13px; word-break: break-all; }
   }
 
-  /* Hamburger hidden on desktop */
   .hamburger { display: none; }
 </style>
 </head>
@@ -317,12 +316,13 @@
 <nav>
   <div class="nav-logo">宋博霖 · Bolin</div>
   <div class="nav-links" id="navLinks">
-    <a href="#about">About</a>
-    <a href="#skills">Skills</a>
-    <a href="#experience">Experience</a>
-    <a href="#projects">Writing</a>
-    <a href="#contact">Contact</a>
+    <a href="#about"      data-zh="关于我"   data-en="About"></a>
+    <a href="#skills"     data-zh="技能"     data-en="Skills"></a>
+    <a href="#experience" data-zh="经历"     data-en="Experience"></a>
+    <a href="#projects"   data-zh="文章"     data-en="Writing"></a>
+    <a href="#contact"    data-zh="联系"     data-en="Contact"></a>
   </div>
+  <button class="lang-btn" id="langBtn">EN</button>
   <button class="hamburger" id="hamburger" aria-label="菜单">
     <span></span><span></span><span></span>
   </button>
@@ -331,56 +331,57 @@
 <!-- HERO -->
 <section class="hero" id="top">
   <div class="hero-inner">
-
     <img class="hero-photo" src="my photo.jpg" alt="Bolin Song">
-
     <div class="hero-text">
       <h1>宋博霖 · Bolin Song</h1>
-
-      <p class="hero-sub">
-        Sports Business Student at Hosei University, Tokyo &nbsp;·&nbsp; Content Creator
+      <p class="hero-sub"
+         data-zh="法政大学体育商业专业学生 · 内容创作者"
+         data-en="Sports Business Student at Hosei University, Tokyo · Content Creator">
       </p>
-
       <div class="hero-tags">
         <span class="tag">🇯🇵 Tokyo</span>
-        <span class="tag">Sports Business</span>
+        <span class="tag" data-zh="体育商业" data-en="Sports Business"></span>
         <span class="tag">中文 · EN · JP</span>
       </div>
-
       <div class="hero-cta">
-        <a href="#contact" class="btn btn-primary">Get in Touch</a>
-        <a href="#projects" class="btn btn-outline">Read My Writing</a>
+        <a href="#contact" class="btn btn-primary"
+           data-zh="联系我" data-en="Get in Touch"></a>
+        <a href="#projects" class="btn btn-outline"
+           data-zh="阅读文章" data-en="Read My Writing"></a>
       </div>
     </div>
-
   </div>
 </section>
 
 <!-- ABOUT -->
 <section id="about">
   <div class="container">
-    <div class="section-label">About Me</div>
-    <div class="section-title">自我介绍</div>
+    <div class="section-label" data-zh="关于我" data-en="About Me"></div>
+    <div class="section-title" data-zh="自我介绍" data-en="About Me"></div>
     <div class="about-grid">
       <div class="about-card">
         <div class="about-icon">🎓</div>
-        <h3>法政大学 · 体育商业</h3>
-        <p>在东京法政大学攻读体育商业专业，GPA 3.01/4.0（前20%），获得JASSO留学生奖学金及校级奖学金。深度研习体育文化、体育媒体及体育法学。</p>
+        <h3 data-zh="法政大学 · 体育商业" data-en="Hosei University · Sports Business"></h3>
+        <p data-zh="在东京法政大学攻读体育商业专业，GPA 3.01/4.0（前20%），获得JASSO留学生奖学金及校级奖学金。深度研习体育文化、体育媒体及体育法学。"
+           data-en="Studying Sports Business at Hosei University in Tokyo. GPA 3.01/4.0 (top 20%), JASSO scholarship and school merit scholarship recipient. Focus areas: sports culture, sports media, and sports law."></p>
       </div>
       <div class="about-card">
         <div class="about-icon">✍️</div>
-        <h3>内容创作者</h3>
-        <p>独立运营微信公众号「HeadingtoTheFuture」5年，累计发布30余篇，多篇阅读量破万（最高2.3万+）。擅长生活感悟与社会观察类深度内容创作。</p>
+        <h3 data-zh="内容创作者" data-en="Content Creator"></h3>
+        <p data-zh="独立运营微信公众号「HeadingtoTheFuture」5年，累计发布30余篇，多篇阅读量破万（最高2.3万+）。擅长生活感悟与社会观察类深度内容创作。"
+           data-en="Independently running WeChat public account 'HeadingtoTheFuture' for 5 years, with 30+ articles published and multiple pieces exceeding 10,000 reads (peak: 23,000+). Specializes in personal essays and social commentary."></p>
       </div>
       <div class="about-card">
         <div class="about-icon">🌏</div>
-        <h3>三语学术背景</h3>
-        <p>普通话母语，托福98分（英语），日语JLPT N2。能够跨语言整合英日中三语文献，具备跨文化研究与交流能力。</p>
+        <h3 data-zh="三语学术背景" data-en="Trilingual Academic Background"></h3>
+        <p data-zh="普通话母语，托福98分（英语），日语JLPT N2。能够跨语言整合英日中三语文献，具备跨文化研究与交流能力。"
+           data-en="Native Mandarin speaker. TOEFL 98 (English), JLPT N2 (Japanese). Capable of cross-language academic research integrating Chinese, Japanese, and English sources."></p>
       </div>
       <div class="about-card">
         <div class="about-icon">☕</div>
-        <h3>丰富的日本工作经验</h3>
-        <p>在东京咖啡店及神户7-Eleven积累了全日语工作经验，熟悉日本职场规范，锻炼了高强度环境下的抗压能力与团队协作精神。</p>
+        <h3 data-zh="丰富的日本工作经验" data-en="Japan Work Experience"></h3>
+        <p data-zh="在东京咖啡店及神户7-Eleven积累了全日语工作经验，熟悉日本职场规范，锻炼了高强度环境下的抗压能力与团队协作精神。"
+           data-en="Accumulated full-Japanese work experience at a Tokyo café and Kobe 7-Eleven. Familiar with Japanese workplace norms, with strong resilience and teamwork skills developed under high-pressure environments."></p>
       </div>
     </div>
   </div>
@@ -390,45 +391,45 @@
 <section id="skills">
   <div class="container">
     <div class="section-label">Skills</div>
-    <div class="section-title">技能与能力</div>
+    <div class="section-title" data-zh="技能与能力" data-en="Skills &amp; Abilities"></div>
     <div class="skills-grid">
       <div class="skill-card">
-        <div class="skill-card-title">语言能力</div>
+        <div class="skill-card-title" data-zh="语言能力" data-en="Languages"></div>
         <div class="skill-item">
-          <span class="skill-name">普通话</span>
+          <span class="skill-name" data-zh="普通话" data-en="Mandarin"></span>
           <div class="skill-bar-bg"><div class="skill-bar" style="width:100%"></div></div>
-          <span class="skill-label">母语</span>
+          <span class="skill-label" data-zh="母语" data-en="Native"></span>
         </div>
         <div class="skill-item">
-          <span class="skill-name">英语</span>
+          <span class="skill-name" data-zh="英语" data-en="English"></span>
           <div class="skill-bar-bg"><div class="skill-bar" style="width:88%"></div></div>
           <span class="skill-label">TOEFL 98</span>
         </div>
         <div class="skill-item">
-          <span class="skill-name">日语</span>
+          <span class="skill-name" data-zh="日语" data-en="Japanese"></span>
           <div class="skill-bar-bg"><div class="skill-bar" style="width:72%"></div></div>
           <span class="skill-label">JLPT N2</span>
         </div>
       </div>
       <div class="skill-card">
-        <div class="skill-card-title">专业技能</div>
+        <div class="skill-card-title" data-zh="专业技能" data-en="Professional Skills"></div>
         <div class="badge-row">
-          <span class="badge">体育商业分析</span>
-          <span class="badge">体育媒体</span>
-          <span class="badge">内容运营</span>
-          <span class="badge">视频剪辑（剪映）</span>
-          <span class="badge">学术研究</span>
-          <span class="badge">跨文化沟通</span>
+          <span class="badge" data-zh="体育商业分析" data-en="Sports Business Analysis"></span>
+          <span class="badge" data-zh="体育媒体" data-en="Sports Media"></span>
+          <span class="badge" data-zh="内容运营" data-en="Content Management"></span>
+          <span class="badge" data-zh="视频剪辑（剪映）" data-en="Video Editing (CapCut)"></span>
+          <span class="badge" data-zh="学术研究" data-en="Academic Research"></span>
+          <span class="badge" data-zh="跨文化沟通" data-en="Cross-cultural Communication"></span>
         </div>
       </div>
       <div class="skill-card">
-        <div class="skill-card-title">办公工具</div>
+        <div class="skill-card-title" data-zh="办公工具" data-en="Office Tools"></div>
         <div class="badge-row">
           <span class="badge">Word</span>
           <span class="badge">Excel</span>
           <span class="badge">PowerPoint</span>
-          <span class="badge">微信公众号运营</span>
-          <span class="badge">PPT排版设计</span>
+          <span class="badge" data-zh="微信公众号运营" data-en="WeChat Official Account"></span>
+          <span class="badge" data-zh="PPT排版设计" data-en="Slide Design"></span>
         </div>
       </div>
     </div>
@@ -439,57 +440,64 @@
 <section id="experience">
   <div class="container">
     <div class="section-label">Experience</div>
-    <div class="section-title">经历</div>
+    <div class="section-title" data-zh="经历" data-en="Experience"></div>
     <div class="timeline">
+
       <div class="tl-item">
         <div class="tl-dot"></div>
-        <div class="tl-meta">2026.05 — 至今</div>
-        <div class="tl-title">咖啡店员</div>
-        <div class="tl-org">Granny Smith Apple Pie & Coffee · 东京</div>
-        <div class="tl-desc"><ul>
-          <li>负责顾客接待、餐品制作及日常运营，单日最高营业额110万日元</li>
-          <li>锻炼了抗压能力与团队协作精神</li>
-        </ul></div>
+        <div class="tl-meta" data-zh="2026.05 — 至今" data-en="May 2026 – Present"></div>
+        <div class="tl-title" data-zh="咖啡店员" data-en="Café Staff"></div>
+        <div class="tl-org">Granny Smith Apple Pie &amp; Coffee · <span data-zh="东京" data-en="Tokyo"></span></div>
+        <div class="tl-desc">
+          <ul data-zh-html="<li>负责顾客接待、餐品制作及日常运营，单日最高营业额110万日元</li><li>锻炼了抗压能力与团队协作精神</li>"
+              data-en-html="<li>Handled customer service, food preparation, and daily operations — peak daily sales of ¥1.1M</li><li>Developed resilience and teamwork skills in a high-pressure environment</li>"></ul>
+        </div>
       </div>
+
       <div class="tl-item">
         <div class="tl-dot"></div>
-        <div class="tl-meta">2026.05</div>
-        <div class="tl-title">日美联合学术研讨会 · 小组组长</div>
-        <div class="tl-org">法政大学 × 辛辛那提大学</div>
-        <div class="tl-desc"><ul>
-          <li>主题：疫情下东京奥运会的举办意义与挑战（全英文发表）</li>
-          <li>负责引言及效益分析两大模块，统筹PPT制作，与教授进行深度学术问答</li>
-        </ul></div>
+        <div class="tl-meta" data-zh="2026.05" data-en="May 2026"></div>
+        <div class="tl-title" data-zh="日美联合学术研讨会 · 小组组长" data-en="Japan-US Joint Academic Seminar · Group Leader"></div>
+        <div class="tl-org"><span data-zh="法政大学 × 辛辛那提大学" data-en="Hosei University × University of Cincinnati"></span></div>
+        <div class="tl-desc">
+          <ul data-zh-html="<li>主题：疫情下东京奥运会的举办意义与挑战（全英文发表）</li><li>负责引言及效益分析两大模块，统筹PPT制作，与教授进行深度学术问答</li>"
+              data-en-html="<li>Topic: The significance and challenges of hosting the Tokyo Olympics during COVID-19 (presented in English)</li><li>Led the introduction and benefit analysis modules, coordinated slide production, and engaged in academic Q&amp;A with professors</li>"></ul>
+        </div>
       </div>
+
       <div class="tl-item">
         <div class="tl-dot"></div>
-        <div class="tl-meta">2025.05</div>
-        <div class="tl-title">跨性别运动员参赛资格研究报告 · 独立研究</div>
-        <div class="tl-org">法政大学</div>
-        <div class="tl-desc"><ul>
-          <li>整合英日中三语文献，完成跨学科学术报告并公开发表</li>
-          <li>在性别公平与竞技公正的张力中提出基于科学证据的政策建议</li>
-        </ul></div>
+        <div class="tl-meta" data-zh="2025.05" data-en="May 2025"></div>
+        <div class="tl-title" data-zh="跨性别运动员参赛资格研究报告 · 独立研究" data-en="Transgender Athlete Eligibility — Independent Research Report"></div>
+        <div class="tl-org" data-zh="法政大学" data-en="Hosei University"></div>
+        <div class="tl-desc">
+          <ul data-zh-html="<li>整合英日中三语文献，完成跨学科学术报告并公开发表</li><li>在性别公平与竞技公正的张力中提出基于科学证据的政策建议</li>"
+              data-en-html="<li>Integrated trilingual (EN/JP/ZH) sources into a cross-disciplinary academic report, publicly presented</li><li>Proposed evidence-based policy recommendations addressing the tension between gender equity and competitive fairness</li>"></ul>
+        </div>
       </div>
+
       <div class="tl-item">
         <div class="tl-dot"></div>
-        <div class="tl-meta">2023.07 — 2025.02</div>
-        <div class="tl-title">便利店员</div>
-        <div class="tl-org">7-Eleven · 神户</div>
-        <div class="tl-desc"><ul>
-          <li>全日语环境下独立完成接客、收银及商品管理</li>
-        </ul></div>
+        <div class="tl-meta" data-zh="2023.07 — 2025.02" data-en="Jul 2023 – Feb 2025"></div>
+        <div class="tl-title" data-zh="便利店员" data-en="Convenience Store Staff"></div>
+        <div class="tl-org">7-Eleven · <span data-zh="神户" data-en="Kobe"></span></div>
+        <div class="tl-desc">
+          <ul data-zh-html="<li>全日语环境下独立完成接客、收银及商品管理</li>"
+              data-en-html="<li>Independently handled customer service, cashiering, and inventory in a full-Japanese environment</li>"></ul>
+        </div>
       </div>
+
       <div class="tl-item">
         <div class="tl-dot"></div>
-        <div class="tl-meta">2021 — 至今</div>
-        <div class="tl-title">微信公众号「HeadingtoTheFuture」· 创作者 & 运营者</div>
-        <div class="tl-org">个人媒体</div>
-        <div class="tl-desc"><ul>
-          <li>独立运营生活感悟与社会观察类公众号，发布30余篇</li>
-          <li>多篇阅读量破万，最高单篇2.3万阅读</li>
-        </ul></div>
+        <div class="tl-meta" data-zh="2021 — 至今" data-en="2021 – Present"></div>
+        <div class="tl-title" data-zh="微信公众号「HeadingtoTheFuture」· 创作者 &amp; 运营者" data-en="WeChat Public Account 'HeadingtoTheFuture' · Creator &amp; Operator"></div>
+        <div class="tl-org" data-zh="个人媒体" data-en="Independent Media"></div>
+        <div class="tl-desc">
+          <ul data-zh-html="<li>独立运营生活感悟与社会观察类公众号，发布30余篇</li><li>多篇阅读量破万，最高单篇2.3万阅读</li>"
+              data-en-html="<li>Independently operating a personal essay &amp; social commentary account with 30+ published articles</li><li>Multiple articles surpassed 10,000 reads; top post reached 23,000 reads</li>"></ul>
+        </div>
       </div>
+
     </div>
   </div>
 </section>
@@ -498,7 +506,7 @@
 <section id="projects">
   <div class="container">
     <div class="section-label">Writing</div>
-    <div class="section-title">精选文章</div>
+    <div class="section-title" data-zh="精选文章" data-en="Selected Writing"></div>
     <div class="projects-grid">
 
       <!-- Featured -->
@@ -506,15 +514,16 @@
         <div class="card-accent" style="width:3px;height:auto;background:var(--green);"></div>
         <div class="card-body">
           <div class="proj-tag-row">
-            <span class="proj-tag">留学 · 成长</span>
-            <span class="proj-tag">Personal Essay</span>
+            <span class="proj-tag" data-zh="留学 · 成长" data-en="Study Abroad · Growth"></span>
+            <span class="proj-tag" data-zh="个人随笔" data-en="Personal Essay"></span>
           </div>
-          <h3>两年日本考学，真的很痛苦。</h3>
-          <p>近650天的考学旅程回顾——从对名校的憧憬，到对私塾失望的愤怒，到在无数次失败中重新定义"快乐"的意义。写给每一个在这场没有敌人的战争中坚持下来的留子。</p>
+          <h3 data-zh="两年日本考学，真的很痛苦。" data-en="Two Years of Japanese College Prep — It Was Really Hard."></h3>
+          <p data-zh="近650天的考学旅程回顾——从对名校的憧憬，到对私塾失望的愤怒，到在无数次失败中重新定义"快乐"的意义。写给每一个在这场没有敌人的战争中坚持下来的留子。"
+             data-en="A look back at nearly 650 days of exam prep — from dreaming of elite universities, to frustration with cram schools, to redefining 'happiness' through repeated failure. Written for every international student who fought through this war with no enemy but themselves."></p>
         </div>
         <div class="card-side">
           <div class="reads-big">2.3万</div>
-          <div class="reads-small">阅读量</div>
+          <div class="reads-small" data-zh="阅读量" data-en="Reads"></div>
           <div class="reads-date">2025</div>
         </div>
       </div>
@@ -523,15 +532,17 @@
         <div class="card-accent"></div>
         <div class="card-body">
           <div class="proj-tag-row">
-            <span class="proj-tag">社会观察</span>
+            <span class="proj-tag" data-zh="社会观察" data-en="Social Commentary"></span>
             <span class="reads-badge">1.7万阅读</span>
           </div>
-          <h3>东京为什么有这么多精神病？</h3>
-          <p>从中央线上的冲突到公交站台的莫名挑衅，解剖东京高压社会结构下的人际冷漠与规则异化——以及为什么儒家文化在某些时刻反而更人性化。</p>
+          <h3 data-zh="东京为什么有这么多精神病？" data-en="Why Does Tokyo Have So Many 'Crazy' People?"></h3>
+          <p data-zh="从中央线上的冲突到公交站台的莫名挑衅，解剖东京高压社会结构下的人际冷漠与规则异化——以及为什么儒家文化在某些时刻反而更人性化。"
+             data-en="From conflicts on the Chuo Line to random aggression at bus stops — dissecting the social alienation and rule-warping beneath Tokyo's high-pressure society, and why Confucian culture can sometimes feel more humane."></p>
         </div>
         <div class="card-footer">
           <span class="card-date">2026.05</span>
-          <a class="card-link" href="https://mp.weixin.qq.com/s/fOJNO8mDOaOP8ls41OsvuA" target="_blank">阅读全文 →</a>
+          <a class="card-link" href="https://mp.weixin.qq.com/s/fOJNO8mDOaOP8ls41OsvuA" target="_blank"
+             data-zh="阅读全文 →" data-en="Read More →"></a>
         </div>
       </div>
 
@@ -539,15 +550,17 @@
         <div class="card-accent"></div>
         <div class="card-body">
           <div class="proj-tag-row">
-            <span class="proj-tag">旅行 · 感悟</span>
+            <span class="proj-tag" data-zh="旅行 · 感悟" data-en="Travel · Reflection"></span>
             <span class="reads-badge">6,491 阅读</span>
           </div>
-          <h3>南京游记</h3>
-          <p>雨天困在板面店外、瞻园的黑天鹅、梧桐树枝杈之间"你让让我我让让你"的生命哲学，以及在先锋书店门口树荫下拆开阅读盲盒的午后。</p>
+          <h3 data-zh="南京游记" data-en="A Trip to Nanjing"></h3>
+          <p data-zh="雨天困在板面店外、瞻园的黑天鹅、梧桐树枝杈之间"你让让我我让让你"的生命哲学，以及在先锋书店门口树荫下拆开阅读盲盒的午后。"
+             data-en="Stranded outside a noodle shop in the rain, a black swan in Zhan Garden, the philosophy of trees making way for each other, and an afternoon unwrapping a 'reading blind box' in the shade outside Librairie Avant-Garde."></p>
         </div>
         <div class="card-footer">
           <span class="card-date">2024.04</span>
-          <a class="card-link" href="https://mp.weixin.qq.com/s/gFMZP1JzMPjwlXJwojbMsA" target="_blank">阅读全文 →</a>
+          <a class="card-link" href="https://mp.weixin.qq.com/s/gFMZP1JzMPjwlXJwojbMsA" target="_blank"
+             data-zh="阅读全文 →" data-en="Read More →"></a>
         </div>
       </div>
 
@@ -559,7 +572,7 @@
 <section id="contact">
   <div class="container">
     <div class="section-label">Contact</div>
-    <div class="section-title">联系我</div>
+    <div class="section-title" data-zh="联系我" data-en="Get in Touch"></div>
     <div class="contact-grid">
       <div class="contact-card">
         <div class="contact-icon">📧</div>
@@ -569,23 +582,16 @@
         </div>
       </div>
       <div class="contact-card">
-        <div class="contact-icon">📱</div>
-        <div>
-          <h4>Phone / WeChat</h4>
-      
-        </div>
-      </div>
-      <div class="contact-card">
         <div class="contact-icon">🏫</div>
         <div>
-          <h4>University</h4>
-          <p>Hosei University · Tokyo</p>
+          <h4 data-zh="学校" data-en="University"></h4>
+          <p data-zh="法政大学 · 东京" data-en="Hosei University · Tokyo"></p>
         </div>
       </div>
       <div class="contact-card">
         <div class="contact-icon">✍️</div>
         <div>
-          <h4>WeChat Public Account</h4>
+          <h4 data-zh="微信公众号" data-en="WeChat Public Account"></h4>
           <p>HeadingtoTheFuture</p>
         </div>
       </div>
@@ -598,19 +604,44 @@
 </footer>
 
 <script>
-  // Smooth scroll
+  // ── Language switching ──
+  let lang = 'zh';
+
+  function applyLang(l) {
+    lang = l;
+    document.documentElement.lang = l === 'zh' ? 'zh' : 'en';
+    document.getElementById('langBtn').textContent = l === 'zh' ? 'EN' : '中文';
+
+    // Elements with data-zh / data-en (textContent)
+    document.querySelectorAll('[data-zh]').forEach(el => {
+      el.textContent = el.dataset[l];
+    });
+
+    // Timeline lists with data-zh-html / data-en-html
+    document.querySelectorAll('[data-zh-html]').forEach(el => {
+      el.innerHTML = el.dataset[l + 'Html'];
+    });
+  }
+
+  document.getElementById('langBtn').addEventListener('click', () => {
+    applyLang(lang === 'zh' ? 'en' : 'zh');
+  });
+
+  // Initialise with Chinese
+  applyLang('zh');
+
+  // ── Smooth scroll ──
   document.querySelectorAll('a[href^="#"]').forEach(a => {
     a.addEventListener('click', e => {
       e.preventDefault();
       const el = document.querySelector(a.getAttribute('href'));
       if (el) el.scrollIntoView({ behavior: 'smooth' });
-      // close menu if open
       navLinks.classList.remove('open');
       hamburger.classList.remove('open');
     });
   });
 
-  // Hamburger toggle
+  // ── Hamburger ──
   const hamburger = document.getElementById('hamburger');
   const navLinks  = document.getElementById('navLinks');
   hamburger.addEventListener('click', () => {
