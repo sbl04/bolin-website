@@ -232,6 +232,83 @@
     font-size: 12px; color: var(--muted);
     border-top: 1px solid var(--border);
   }
+
+  /* ── MOBILE ── */
+  @media (max-width: 768px) {
+
+    /* Nav: hide links, show hamburger */
+    nav { padding: 0 1.2rem; }
+    .nav-links { display: none; }
+    .nav-links.open {
+      display: flex; flex-direction: column; gap: 0;
+      position: fixed; top: 56px; left: 0; right: 0;
+      background: rgba(247,245,240,0.97);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 12px 0;
+      z-index: 99;
+    }
+    .nav-links.open a {
+      padding: 12px 1.6rem; font-size: 15px;
+      border-bottom: 1px solid var(--border);
+    }
+    .hamburger {
+      display: flex; flex-direction: column; justify-content: center; gap: 5px;
+      cursor: pointer; padding: 6px; border: none; background: none;
+    }
+    .hamburger span {
+      display: block; width: 22px; height: 2px;
+      background: var(--ink); border-radius: 2px;
+      transition: all 0.25s;
+    }
+    .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; }
+    .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+    /* Hero */
+    .hero { padding-top: 100px; padding-bottom: 60px; }
+    .hero-inner {
+      flex-direction: column; text-align: center;
+      padding: 0 1.2rem; gap: 20px;
+    }
+    .hero-photo { width: 110px; height: 110px; }
+    .hero-text h1 { font-size: 26px; }
+    .hero-sub { font-size: 14px; }
+    .hero-tags { justify-content: center; }
+    .hero-cta { justify-content: center; flex-wrap: wrap; }
+
+    /* Sections */
+    section { padding: 48px 0; }
+    .container { padding: 0 1.2rem; }
+    .section-title { font-size: 22px; margin-bottom: 24px; }
+
+    /* About */
+    .about-grid { grid-template-columns: 1fr; gap: 14px; }
+
+    /* Skills */
+    .skills-grid { grid-template-columns: 1fr; gap: 14px; }
+
+    /* Projects */
+    .projects-grid { grid-template-columns: 1fr; gap: 14px; }
+    .project-card.wide {
+      grid-column: span 1;
+      flex-direction: column;
+    }
+    .wide .card-accent { width: auto; height: 3px; }
+    .wide .card-side {
+      flex-direction: row; align-items: center; gap: 12px;
+      border-left: none; border-top: 1px solid var(--border);
+      padding: 14px 20px; min-width: unset;
+    }
+    .wide .reads-big { font-size: 22px; }
+
+    /* Contact */
+    .contact-grid { grid-template-columns: 1fr; gap: 12px; }
+    .contact-card p { font-size: 13px; word-break: break-all; }
+  }
+
+  /* Hamburger hidden on desktop */
+  .hamburger { display: none; }
 </style>
 </head>
 <body>
@@ -239,13 +316,16 @@
 <!-- NAV -->
 <nav>
   <div class="nav-logo">宋博霖 · Bolin</div>
-  <div class="nav-links">
+  <div class="nav-links" id="navLinks">
     <a href="#about">About</a>
     <a href="#skills">Skills</a>
     <a href="#experience">Experience</a>
     <a href="#projects">Writing</a>
     <a href="#contact">Contact</a>
   </div>
+  <button class="hamburger" id="hamburger" aria-label="菜单">
+    <span></span><span></span><span></span>
+  </button>
 </nav>
 
 <!-- HERO -->
@@ -518,54 +598,25 @@
 </footer>
 
 <script>
+  // Smooth scroll
   document.querySelectorAll('a[href^="#"]').forEach(a => {
     a.addEventListener('click', e => {
       e.preventDefault();
       const el = document.querySelector(a.getAttribute('href'));
       if (el) el.scrollIntoView({ behavior: 'smooth' });
+      // close menu if open
+      navLinks.classList.remove('open');
+      hamburger.classList.remove('open');
     });
+  });
+
+  // Hamburger toggle
+  const hamburger = document.getElementById('hamburger');
+  const navLinks  = document.getElementById('navLinks');
+  hamburger.addEventListener('click', () => {
+    hamburger.classList.toggle('open');
+    navLinks.classList.toggle('open');
   });
 </script>
 </body>
 </html>
-/* Mobile */
-@media (max-width: 768px) {
-
-  .hero-inner {
-    flex-direction: column;
-    text-align: center;
-  }
-
-  .hero-text {
-    width: 100%;
-  }
-
-  .hero-tags {
-    justify-content: center;
-  }
-
-  .hero-cta {
-    justify-content: center;
-    flex-wrap: wrap;
-  }
-
-  .about-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .skills-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .container {
-    padding: 0 1.2rem;
-  }
-
-  .hero-inner {
-    padding: 0 1.2rem;
-  }
-
-  .hero-text h1 {
-    font-size: 28px;
-  }
-}
